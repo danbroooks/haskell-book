@@ -1,14 +1,12 @@
 module Main where
 
 import Test.Tasty (TestTree, defaultMain, testGroup)
-import Test.Tasty.HUnit (assertEqual, testCase)
+import qualified Tests.Ch15 as Ch15
 
-tests :: TestTree
-tests = testGroup
-  "tests" [
-    testCase "true"
-      $ assertEqual "true" True True
-  ]
+tests :: [ TestTree ]
+tests =
+  [ testGroup "chapter 15" Ch15.tests ]
 
 main :: IO ()
-main = defaultMain tests
+main =
+  defaultMain $ testGroup "tests" tests
