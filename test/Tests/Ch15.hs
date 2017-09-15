@@ -1,10 +1,18 @@
 module Tests.Ch15 where
 
-import Ch15
 import Data.Monoid
 import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.HUnit
 import Test.Tasty.QuickCheck
+
+import Ch15
+import Tests.Laws.Monoid as M
+
+instance Arbitrary a => Arbitrary (First' a) where
+  arbitrary = do
+    x <- arbitrary
+    frequency [ (1, return (First' (Only x)))
+              , (1, return (First' Nada))]
 
 tests :: [ TestTree ]
 tests = [
@@ -28,6 +36,15 @@ tests = [
 
       testProperty "madlibbin' == madlibbinBetter'" $
         \e adv noun adj -> (madlibbin' e adv noun adj) == (madlibbinBetter' e adv noun adj)
+    ],
+    testGroup "15.12" [
+      testProperty "obeys associativity law" (M.assoc :: FirstMappend)
+    , testProperty "obeys right identity law" (M.rightIdentity :: First' String -> Bool)
+    , testProperty "obeys right identity law" (M.leftIdentity :: First' String -> Bool)
+    , testCase "test 1" $ First' (Only 1) `mappend` First' Nada      @=? First' (Only 1)
+    , testCase "test 2" $ First' Nada `mappend` First' Nada          @=? First' (Nada :: Optional Int)
+    , testCase "test 3" $ First' Nada `mappend` First' (Only 2)      @=? First' (Only 2)
+    , testCase "test 4" $ First' (Only 1) `mappend` First' (Only 2)  @=? First' (Only 1)
     ]
   ]
 

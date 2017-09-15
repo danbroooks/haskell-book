@@ -1,5 +1,6 @@
 module Ch15 where
 
+import Control.Monad
 import Data.Monoid
 
 data Optional a =
@@ -44,4 +45,20 @@ madlibbinBetter' e adv noun adj =
     noun, " and drove off with his ",
     adj, " wife."
   ]
+
+--
+
+newtype First' a =
+  First' { getFirst' :: Optional a }
+  deriving (Eq, Show)
+
+instance Monoid (First' a) where
+  mempty = First' Nada
+  mappend (First' Nada) x = x
+  mappend x _ = x
+
+firstMappend :: First' a -> First' a -> First' a
+firstMappend = mappend
+
+type FirstMappend = First' String -> First' String -> First' String -> Bool
 
