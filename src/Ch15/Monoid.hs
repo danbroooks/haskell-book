@@ -1,4 +1,4 @@
-module Ch15 where
+module Ch15.Monoid where
 
 import Control.Monad
 import Data.Monoid

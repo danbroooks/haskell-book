@@ -8,5 +8,5 @@ leftIdentity a = (mempty <> a) == a
 rightIdentity :: (Eq m, Monoid m) => m -> Bool
 rightIdentity a = (a <> mempty) == a
 
-assoc :: (Eq m, Monoid m) => m -> m -> m -> Bool
-assoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
+associativity :: (Eq m, Monoid m) => m -> m -> m -> Bool
+associativity a b c = (a <> (b <> c)) == ((a <> b) <> c)
