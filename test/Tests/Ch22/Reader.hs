@@ -22,4 +22,9 @@ tests = testGroup "reader" [
       testCase "runReader" $ runReader (Reader (*)) 2 5 @=? 10
     , testCase "ask" $ runReader ask 10 @=? 10
     ]
+  , testGroup "22.6" [
+      testCase "liftA2"  $ dogName (liftA2 Dog dog personName $ Person "Chris" "Austin" "Fido") @=? "Fido"
+    , testCase "asks"    $ (runReader $ asks (+2)) 8 @=? 10
+    , testCase "getDogR" $ dogName (runReader getDogR $ Person "Chris" "Austin" "Fido") @=? "Fido"
+    ]
   ]
