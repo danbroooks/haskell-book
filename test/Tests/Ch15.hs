@@ -5,4 +5,4 @@ import Tests.Ch15.Semigroup as Semigroup
 import Test.Tasty (TestTree, testGroup)
 
 tests :: TestTree
-tests = testGroup "chapter 15" $ [ Monoid.tests, Semigroup.tests ]
+tests = testGroup "chapter 15" [ Monoid.tests, Semigroup.tests ]
