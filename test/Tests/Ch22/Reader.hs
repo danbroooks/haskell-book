@@ -18,4 +18,8 @@ tests = testGroup "reader" [
     , testCase "monadicallyTupled" $ monadicallyTupled "Dan" @=? ("DAN", "naD")
     , testCase "doBlockTupled"     $ explicitlyTupled "Dan" @=? ("DAN", "naD")
     ]
+  , testGroup "22.5" [
+      testCase "runReader" $ runReader (Reader (*)) 2 5 @=? 10
+    , testCase "ask" $ runReader ask 10 @=? 10
+    ]
   ]
